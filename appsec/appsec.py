@@ -1,12 +1,11 @@
 import os
-import json
-# import aiohttp
+import aiohttp
 
-URL = ''
+from .urls import CREATE_RUN_ENDPOINT
 
 
 async def create_run(session, repo: str, to_event: str, from_event: str = None):
-    async with session.post(url=URL, json={
+    async with session.post(url=CREATE_RUN_ENDPOINT, json={
         'repo': repo,
         'to_event': to_event,
         'from_event': from_event
@@ -29,12 +28,10 @@ async def main(
         "to_event": to_event,
         "from_event": from_event
     }
-    raise Exception(json.dumps(data))
-    # try:
-    #     async with aiohttp.ClientSession(headers=headers) as session:
-    #         result = await create_run(session, repo, to_event, from_event)
-    #         print(result)
-    # except aiohttp.ClientError as ex:
-    #     print(str(ex))
-    #
+    try:
+        async with aiohttp.ClientSession(headers=headers) as session:
+            result = await create_run(session, repo, to_event, from_event)
+    except aiohttp.ClientError as ex:
+        print(str(ex))
+
 
