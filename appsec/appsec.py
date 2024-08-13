@@ -22,12 +22,6 @@ async def main(
     headers = {
         "Authorization": f"Bearer {api_token}"
     }
-    data = {
-        "headers": headers,
-        "repo": repo,
-        "to_event": to_event,
-        "from_event": from_event
-    }
     try:
         async with aiohttp.ClientSession(headers=headers) as session:
             result = await create_run(session, repo, to_event, from_event)
